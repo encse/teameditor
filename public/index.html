@@ -6,6 +6,8 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="author" content="Encsé (encse)" />
     <link href="style.css" media="all" rel="stylesheet" type="text/css" />
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
     <script type="text/javascript">
 
         let stText;
@@ -175,22 +177,20 @@
 
         };
         function updateLink() {
-            let uri = location.href.substring(0, location.href.lastIndexOf('/') + 1) + '?';
+            let url = new URL(location.pathname, location.href);
             if (stText != '')
-                uri += 'q=' + escape(stText);
+                url.searchParams.set('q', stText);
             if (mask != 0)
-                uri += '&t=' + mask;
+                url.searchParams.set('t', mask);
 
-            document.getElementById('permalink').innerHTML = `<a href="${uri}">${uri}</a>`;
+            document.getElementById('permalink').innerHTML = `<a href="${url}">${url}</a>`;
         }
     </script>
 
 
     <style>
-        a img,
-        img a,
         img {
-            border: none;
+            user-select: none;
         }
 
         #image-container {
@@ -208,7 +208,7 @@
 
         .person img {
             position: relative;
-            /*cursor: pointer;*/
+            cursor: pointer;
         }
 
         #sign {
