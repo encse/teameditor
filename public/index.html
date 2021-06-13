@@ -19,13 +19,13 @@
 
             this.Toggle = function () {
                 this.fToggle = !this.fToggle;
-                this.AdjustImage();
+                this.adjustImage();
             }
 
-            this.SetText = function (st) {
-                this.AdjustImage();
+            this.setText = function (st) {
+                this.adjustImage();
 
-                signDiv.innerHTML = st;
+                signDiv.innerText = st;
                 let width = signDiv.clientWidth;
                 let contentWidth = signDiv.scrollWidth;
                 let fontSize = 500;
@@ -35,10 +35,10 @@
                     signDiv.style.fontSize = fontSize + 'px';
                 }
                 stText = st;
-                UpdateLink();
+                updateLink();
             }
 
-            this.AdjustImage = function () {
+            this.adjustImage = function () {
                 signDiv.style.width = '140px';
                 signDiv.style.height = '88px';
                 if (!this.fToggle) {
@@ -53,7 +53,7 @@
                 }
             }
             this.fToggle = false;
-            this.SetText(st);
+            this.setText(st);
         }
 
         function Person(urlImage, x, y, height, maskId, rgpoly, sign) {
@@ -78,29 +78,29 @@
                     area.setAttribute('shape', 'poly');
                     area.setAttribute('coords', rgpoly[i]);
                     area.style.cursor = 'pointer';
-                    area.onclick = Toggle;
+                    area.onclick = toggle;
                     document.getElementById('themap').appendChild(area);
                 }
             }
 
-            function Toggle() {
+            function toggle() {
                 mask ^= maskId;
-                UpdateImage((mask & maskId) != 0);
-                UpdateLink();
+                updateImage((mask & maskId) != 0);
+                updateLink();
                 if (sign)
                     sign.Toggle();
             }
 
             if ((mask & maskId) != 0) {
-                UpdateImage(true);
+                updateImage(true);
                 if (sign)
                     sign.Toggle();
             }
             else {
-                UpdateImage(false);
+                updateImage(false);
             }
 
-            function UpdateImage(fToggle) {
+            function updateImage(fToggle) {
                 if (fToggle)
                     img.style.top = `-${height}px`;
                 else
@@ -123,7 +123,7 @@
             document.getElementById('q').value = stInitialText;
 
             document.getElementById('query').onsubmit = () => {
-                sign.SetText(document.getElementById('q').value);
+                sign.setText(document.getElementById('q').value);
                 return false;
             }
 
@@ -174,7 +174,7 @@
             );
 
         };
-        function UpdateLink() {
+        function updateLink() {
             let uri = location.href.substring(0, location.href.lastIndexOf('/') + 1) + '?';
             if (stText != '')
                 uri += 'q=' + escape(stText);
